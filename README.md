@@ -1,7 +1,7 @@
 # GEO Microarray and RNA-SEQ-Alingment
 Pipeline used for Kajitani et al., 2024, Cockayne syndrome transcriptome analysis
 
-The pipeline is firtst used to obtain data from NCBI SRA (Sequence Read Archive), convert it to a .fastq format, remove adapter sequence and sequences with low qualities.
+The pipeline is first used to obtain data from NCBI SRA (Sequence Read Archive), convert it to a .fastq format, remove adapter sequence and sequences with low qualities.
 Then, reads are aligned to a reference genome, generating a .sam file. This file is then converted into a .bam file, to get the number of raw read counts aligned in each gene.
 Read counts table is then read in R and read count numbers are normalized via DESeq2 package, also used to identify differentially expressed genes, and their respective log2 fold change.
 R packages clusterprofiler and enrichplot are then used for enrichment analysis (Over-representation analysis (ORA) and Gene set enrichment analysis (GSEA) and graph plotting.
