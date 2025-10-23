@@ -1,7 +1,8 @@
-###################################
+##########################################
 # Downloading SRA files using SRAToolkit #
-###################################
+##########################################
 
+# Create a .py file for each SRA accesion number if there are memory (SSD/HDD) limitations
 
 # python script for multiple SRA accession numbers: GSE124208
 
@@ -54,3 +55,32 @@ for sra_id in sra_numbers:
     prefetch = "prefetch " + sra_id
     print ("The command used was: " + prefetch)
     subprocess.call(prefetch, shell=True)
+
+
+########################################################
+# converting to .fastq files using bash and SRAToolkit #
+########################################################
+
+# create a .sh - will process subfolders inside each GSE
+
+#!/bin/bash
+
+# Iterate over subfolders
+for folder in SRR*; do
+	if [ -d "$folder" ]; then
+    	# Extract subfolder name
+    	subfolder_name=$(basename "$folder")
+   	 
+    	# Find .sra file in the subfolder
+    	sra_file="$folder/$subfolder_name.sra"
+   	 
+    	if [ -f "$sra_file" ]; then
+        	# Run fasterq-dump in the subfolder
+        	cd "$folder" || continue
+        	fasterq-dump "$subfolder_name.sra"
+        	cd ..
+    	else
+        	echo "No .sra file found in $folder"
+    	fi
+	fi
+done
