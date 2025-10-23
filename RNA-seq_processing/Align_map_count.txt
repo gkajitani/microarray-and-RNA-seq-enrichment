@@ -1,0 +1,40 @@
+##############################
+# Aligning reads with HISAT2 #
+##############################
+
+# http://daehwankimlab.github.io/hisat2/manual/
+
+# single-end reads: output sam file and summary of alignment results
+
+hisat2 -p 7 -q -x /home/gustavo/hisat2-2.2.1-source/hisat2-2.2.1/mm10_genome/mm10/genome -U SRR19924875.U.qtrim -S SRR19924875.sam 2>SRR19924875_hisat2_summary.txt
+
+hisat2 -p 7 -q -x /home/gustavo/hisat2-2.2.1-source/hisat2-2.2.1/mm10_genome/mm10/genome -U SRR19924876.fastq -S SRR19924876.sam 2>SRR19924875_hisat2_summary.txt
+
+# paired-end reads: output sam file and summary of alignment results
+
+
+hisat2 -p 7 -q -x /home/gustavo/hisat2-2.2.1-source/hisat2-2.2.1/hg38_genome/grch38/genome -1\
+SRR8209217_1.trimmed.fastq -2 SRR8209217_2.trimmed.fastq -S SRR8209217.sam 2>SRR8209217_hisat2_summary.txt
+
+hisat2 -p 7 -q -x /home/gustavo/hisat2-2.2.1-source/hisat2-2.2.1/hg38_genome/grch38/genome -1\
+SRR8209218_1.trimmed.fastq -2 SRR8209218_2.trimmed.fastq -S SRR8209218.sam 2>SRR8209218_hisat2_summary.txt
+
+#############
+# SAM to BAM #
+#############
+
+# https://www.htslib.org/
+# Convert sam to bam, sort file
+
+for file in $(ls *.sam); do samtools sort -@ 20 -o "${file}.bam" $file;done
+
+
+###########################
+# Counting reads per gene #
+###########################
+
+# https://subread.sourceforge.net/featureCounts.html
+# Using featureCounts to count genes, using a gtf file as a reference (human and mouse)
+
+for file in $(ls *.bam); do featureCounts -T 7 -p --countReadPairs -t exon -g gene_id -a /home/gustavo/featurecounts/hg38.refGene.gtf -o "${file}.txt"  $file;done
+for file in $(ls *.bam); do featureCounts -t exon -g gene_id -a mm10.refGene.gtf -o "${file}.txt"  $file;done
