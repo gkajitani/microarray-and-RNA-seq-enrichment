@@ -20,6 +20,8 @@ gset <- gset[[idx]]
 # make proper column names to match toptable 
 fvarLabels(gset) <- make.names(fvarLabels(gset))
 
+# Note: 0 will be the reference (i.e. if logFC is positive, "0" has a higher expression of that gene
+
 # group membership for all samples
 gsms <- paste0("XXXXXXXXXXXXXXXXXXX000000XXXXXXXXXXXXXXXXXXXXXXXXX",
                "XXXXXXXXXX111XXXXXXXX")
