@@ -20,8 +20,6 @@ gset <- gset[[idx]]
 # make proper column names to match toptable 
 fvarLabels(gset) <- make.names(fvarLabels(gset))
 
-# Note: CS samples should be marked as "1", control as "0".
-
 # group membership for all samples
 gsms <- paste0("XXXXXXXXXXXXXXXXXXX000000XXXXXXXXXXXXXXXXXXXXXXXXX",
                "XXXXXXXXXX111XXXXXXXX")
