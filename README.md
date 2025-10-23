@@ -1,4 +1,4 @@
-# GEO Microarray and RNA-SEQ-Alingment
+# GEO Microarray and RNA-SEQ-Alingment, followed by differential expression and enrichment analysis
 Pipeline used for Kajitani et al., 2025, "Altered pathways in Cockayne syndrome: Involvement of MAPK, PI3K-Akt, extracellular matrix, inflammation, and neuronal signaling"
 
 Ths article analyzed transcriptome datasets generated using either microarrays or RNA-Seq. Both types of data were obtained from Gene Expression Omnibus (GEO). Microarray data was
