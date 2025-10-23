@@ -1,0 +1,47 @@
+#################################
+# Batch processing .fastq files #
+#################################
+
+# Note: For human samples. Mouse samples were aligned and mapped using mm10 genome
+
+#!/bin/bash
+
+# Parameters
+hisat2_index="/home/gustavo/hisat2-2.2.1-source/hisat2-2.2.1/hg38_genome/grch38/genome"
+gtf_file="/home/gustavo/featurecounts/hg38.refGene.gtf"
+threads=20
+
+# Iterate over subfolders
+for folder in SRR*; do
+	if [ -d "$folder" ]; then
+    	# Extract subfolder name
+    	subfolder_name=$(basename "$folder")
+   	 
+    	# Run trimmomatic and log output in the subfolder
+    	java -jar /home/gustavo/Trimmomatic-0.39/trimmomatic-0.39.jar PE -threads $threads "$folder/${subfolder_name}_1.fastq" "$folder/${subfolder_name}_2.fastq" \
+           	"$folder/${subfolder_name}_1.trimmed.fastq" "$folder/${subfolder_name}_1un.trimmed.fastq" \
+           	"$folder/${subfolder_name}_2.trimmed.fastq" "$folder/${subfolder_name}_2un.trimmed.fastq" \
+           	ILLUMINACLIP:/home/gustavo/Trimmomatic-0.39/adapters/TruSeq3-PE-2.fa:2:30:10:2:True LEADING:20 TRAILING:20 MINLEN:20 > "$folder/trimmomatic.log" 2>&1
+   	 
+    	# Aligning reads with HISAT2
+    	echo "Aligning reads with HISAT2..."
+    	hisat2 -p $threads -q -x $hisat2_index -1 "$folder/${subfolder_name}_1.trimmed.fastq" -2 "$folder/${subfolder_name}_2.trimmed.fastq" -S "$folder/${subfolder_name}.sam" 2>"$folder/${subfolder_name}_hisat2_summary.txt"
+
+    	# Remove original .fastq files and un.trimmed.fastq files
+    	rm "$folder/${subfolder_name}"_{1,2}{,.un}.trimmed.fastq
+
+    	# Convert SAM to BAM and remove SAM files
+    	echo "Converting SAM to BAM..."
+    	samtools sort -@ $threads -o "$folder/${subfolder_name}.bam" "$folder/${subfolder_name}.sam"
+    	rm "$folder/${subfolder_name}.sam"
+
+    	# Count reads per gene and remove BAM files
+    	echo "Counting reads per gene..."
+    	featureCounts -T $threads -p --countReadPairs -t exon -g gene_id -a $gtf_file -o "$folder/${subfolder_name}.txt" "$folder/${subfolder_name}.bam"
+    	rm "$folder/${subfolder_name}.bam"
+
+    	echo "Completed processing $folder."
+	else
+    	echo "No .sra file found in $folder"
+	fi
+done
