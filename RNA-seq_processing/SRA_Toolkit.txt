@@ -1,0 +1,56 @@
+###################################
+# Downloading SRA files using SRAToolkit #
+###################################
+
+
+# python script for multiple SRA accession numbers: GSE124208
+
+import subprocess
+
+sra_numbers = [
+	"SRR8360392", "SRR8360393", "SRR8360394", "SRR8360395", "SRR8360396", "SRR8360397", "SRR8360398", "SRR8360399", "SRR8360408", "SRR8360409", "SRR8360410", "SRR8360411"
+	]
+
+# this will download the .sra files to ~/ncbi/public/sra/ (will create directory if not present)
+for sra_id in sra_numbers:
+	print ("Currently downloading: " + sra_id)
+	prefetch = "prefetch " + sra_id
+	print ("The command used was: " + prefetch)
+	subprocess.call(prefetch, shell=True)
+
+
+#############################################################
+
+
+# python script for multiple SRA accession numbers: GSE129002
+
+import subprocess
+
+sra_numbers = [
+	"SRR8799808", "SRR8799809", "SRR8799810", "SRR8799811", "SRR8799812", "SRR8799813"
+	]
+
+# this will download the .sra files to ~/ncbi/public/sra/ (will create directory if not present)
+for sra_id in sra_numbers:
+	print ("Currently downloading: " + sra_id)
+	prefetch = "prefetch " + sra_id
+	print ("The command used was: " + prefetch)
+	subprocess.call(prefetch, shell=True)
+
+
+#############################################################
+
+# python script for multiple SRA accession numbers: GSE122736
+
+import subprocess
+
+sra_numbers = [
+    "SRR8209217", "SRR8209218", "SRR8209219", "SRR8209220", "SRR8209221", "SRR8209222", "SRR8209223", "SRR8209224"
+    ]
+
+# this will download the .sra files to ~/ncbi/public/sra/ (will create directory if not present)
+for sra_id in sra_numbers:
+    print ("Currently downloading: " + sra_id)
+    prefetch = "prefetch " + sra_id
+    print ("The command used was: " + prefetch)
+    subprocess.call(prefetch, shell=True)
