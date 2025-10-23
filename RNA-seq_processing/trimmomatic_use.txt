@@ -1,0 +1,100 @@
+#################################################################
+# Trimming reads with low quality and adapters with trimmomatic #
+#################################################################
+
+# https://github.com/usadellab/Trimmomatic
+
+##################################################################
+##################################################################
+##################################################################
+##################################################################
+
+# Single file:
+
+java -jar trimmomatic-0.39.jar SE -threads 20 -phred33 SRR19924904.fastq SRR19924904.U.qtrim SLIDINGWINDOW:4:5 LEADING:20 TRAILING:20 MINLEN:20 > "SRR19924904_trimmomatic.log" 2>&1
+
+
+java -jar trimmomatic-0.39.jar PE -threads 20 -phred33 July_2014_Camila_Carriao_RNA_SEQ_04_WT_24m_WT_24m_F3.fastq July_2014_Camila_Carriao_RNA_SEQ_04_WT_24m_WT_24m_F3.U.qtrim SLIDINGWINDOW:4:5 LEADING:20 TRAILING:20 MINLEN:20
+
+java -jar trimmomatic-0.39.jar PE -threads 20 SRR8209217_1.fastq SRR8209217_2.fastq  \
+          	SRR8209217_1.trimmed.fastq SRR8209217_1un.trimmed.fastq \
+          	SRR8209217_2.trimmed.fastq SRR8209217_2un.trimmed.fastq \
+SLIDINGWINDOW:4:5 LEADING:20 TRAILING:20 MINLEN:20
+
+java -jar trimmomatic-0.39.jar PE -threads 20 SRR8209217_1.fastq SRR8209217_2.fastq  \
+          	SRR8209217_1.trimmed.fastq SRR8209217_1un.trimmed.fastq \
+          	SRR8209217_2.trimmed.fastq SRR8209217_2un.trimmed.fastq \
+          	 ILLUMINACLIP:TruSeq3-PE-2.fa:2:30:10:2:True LEADING:20 TRAILING:20 MINLEN:20
+
+java -jar /home/gustavo/Trimmomatic-0.39/trimmomatic-0.39.jar PE -threads 10 SRR8209217_1.fastq SRR8209217_2.fastq  \
+          	SRR8209217_1.trimmed.fastq SRR8209217_1un.trimmed.fastq \
+          	SRR8209217_2.trimmed.fastq SRR8209217_2un.trimmed.fastq \
+          	 ILLUMINACLIP:TruSeq3-PE-2.fa:2:30:10:2:True LEADING:20 TRAILING:20 MINLEN:20
+
+/home/gustavo/Trimmomatic-0.39/trimmomatic-0.39.jar
+
+java -jar <path to trimmomatic.jar> PE [-threads <threads] [-phred33 | -phred64] [-trimlog <logFile>] <input 1> <input 2> <paired output 1> <unpaired output 1> <paired output 2> <unpaired output 2> <step 1>
+
+TruSeq3-PE-2.fa
+
+IDT for Illumina TruSeq DNA
+
+AGATCGGAAGAGCACACGTCTGAACTCCAGTCA
+
+AGATCGGAAGAGCACACGTCTGAACTCCAGTCAC
+
+AGATCGGAAGAGCGTCGTGTAGGGAAAGAGTGT
+
+AGATCGGAAGAGCGTCGTGTAGGGAAAGAGTGTA
+
+>PrefixPE/1
+AATGATACGGCGACCACCGAGATCTACACTCTTTCCCTACACGACGCTCTTCCGATCT
+>PrefixPE/2
+CAAGCAGAAGACGGCATACGAGATCGGTCTCGGCATTCCTGCTGAACCGCTCTTCCGATCT
+>PCR_Primer1
+AATGATACGGCGACCACCGAGATCTACACTCTTTCCCTACACGACGCTCTTCCGATCT
+>PCR_Primer1_rc
+AGATCGGAAGAGCGTCGTGTAGGGAAAGAGTGTAGATCTCGGTGGTCGCCGTATCATT
+>PCR_Primer2
+CAAGCAGAAGACGGCATACGAGATCGGTCTCGGCATTCCTGCTGAACCGCTCTTCCGATCT
+>PCR_Primer2_rc
+AGATCGGAAGAGCGGTTCAGCAGGAATGCCGAGACCGATCTCGTATGCCGTCTTCTGCTTG
+
+>PrefixPE/1
+TACACTCTTTCCCTACACGACGCTCTTCCGATCT
+>PrefixPE/2
+GTGACTGGAGTTCAGACGTGTGCTCTTCCGATCT
+>PE1
+TACACTCTTTCCCTACACGACGCTCTTCCGATCT
+>PE1_rc
+AGATCGGAAGAGCGTCGTGTAGGGAAAGAGTGTA
+>PE2
+GTGACTGGAGTTCAGACGTGTGCTCTTCCGATCT
+>PE2_rc
+AGATCGGAAGAGCACACGTCTGAACTCCAGTCAC
+
+
+##################################################################
+##################################################################
+##################################################################
+##################################################################
+
+# Batch processing, .sh file:
+
+#!/bin/bash
+
+# Iterate over subfolders
+for folder in SRR*; do
+	if [ -d "$folder" ]; then
+    	# Extract subfolder name
+    	subfolder_name=$(basename "$folder")
+   	 
+    	# Run trimmomatic and log output in the subfolder
+    	java -jar /home/gustavo/Trimmomatic-0.39/trimmomatic-0.39.jar PE -threads 20 "$folder/${subfolder_name}_1.fastq" "$folder/${subfolder_name}_2.fastq" \
+           	"$folder/${subfolder_name}_1.trimmed.fastq" "$folder/${subfolder_name}_1un.trimmed.fastq" \
+           	"$folder/${subfolder_name}_2.trimmed.fastq" "$folder/${subfolder_name}_2un.trimmed.fastq" \
+           	ILLUMINACLIP:/home/gustavo/Trimmomatic-0.39/adapters/TruSeq3-PE-2.fa:2:30:10:2:True LEADING:20 TRAILING:20 MINLEN:20 > "$folder/trimmomatic.log" 2>&1
+	else
+    	echo "No .sra file found in $folder"
+	fi
+done
