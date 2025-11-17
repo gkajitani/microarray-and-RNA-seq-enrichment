@@ -3,6 +3,8 @@ library("wesanderson")
 
 setwd ("~/Desktop/CS_Paper/Figure_3/csv")
 
+# Note: These were the first versions of the plots in the Figure 3. Further adjustments using image editing software were made to combine them.
+
 #############
 # Figure 3A #
 #############
