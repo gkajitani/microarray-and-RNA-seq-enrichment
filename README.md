@@ -1,7 +1,7 @@
 # GEO Microarray and RNA-SEQ-Alingment, followed by differential expression and enrichment analysis
 Pipeline used for Kajitani et al., 2025, "Altered pathways in Cockayne syndrome: Involvement of MAPK, PI3K-Akt, extracellular matrix, inflammation, and neuronal signaling"
 
-Ths article analyzed transcriptome datasets generated using either microarrays or RNA-Seq. Both types of data were obtained from Gene Expression Omnibus (GEO). Microarray data was
+The article analyzed transcriptome datasets generated using either microarrays or RNA-Seq. Both types of data were obtained from Gene Expression Omnibus (GEO). Microarray data was
 processed using R, while RNA-Seq data was processed using a pipeline based on Hisat2 alignment followed by read mapping and counting through featureCounts.
 
 The RNA-Seq pipeline is used to obtain data from NCBI SRA (Sequence Read Archive), convert it to a .fastq format, remove adapter sequence and sequences with low quality scores.
