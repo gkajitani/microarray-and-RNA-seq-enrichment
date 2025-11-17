@@ -22,6 +22,8 @@ options(enrichplot.colours = c("#501E4D","#791F59", "#9F1A5B", "#B31657","#DE2E4
 ###############################################
 ###############################################
 
+# Note: These were the first versions of the plots in the Figure 4. Further adjustments using image editing software were made to combine them.
+
 
 ##############
 # Human GOBP #
