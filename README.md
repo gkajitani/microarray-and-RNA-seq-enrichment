@@ -9,6 +9,8 @@ Reads are then aligned to a reference genome, generating a .sam file. This file 
 Read counts table is then read in R and read count numbers are normalized via DESeq2 package, also used to identify differentially expressed genes, along with their respective log2 fold change.
 R packages clusterprofiler and enrichplot are then used for enrichment analysis (Over-representation analysis (ORA) and Gene set enrichment analysis (GSEA) and graph plotting.
 
+* processing/ : folder of scripts for data processing of expression microarray data and RNA-seq reads. From raw data to differential expression analysis.
+* clusterProfiler/ : folder of scripts for ORA and GSEA enrichment analysis and plots.
 
 # Microarray analyses main packages, available at bioconductor, scripts based on GEO2R:
 
