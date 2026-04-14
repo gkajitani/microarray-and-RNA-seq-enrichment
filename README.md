@@ -10,7 +10,8 @@ Read counts table is then read in R and read count numbers are normalized via DE
 R packages clusterprofiler and enrichplot are then used for enrichment analysis (Over-representation analysis (ORA) and Gene set enrichment analysis (GSEA) and graph plotting.
 
 * processing/ : folder of scripts for data processing of expression microarray data and RNA-seq reads. From raw data to differential expression analysis.
-* clusterProfiler/ : folder of scripts for ORA and GSEA enrichment analysis and plots.
+* clusterProfiler/ : folder of scripts for ORA and GSEA enrichment analysis.
+* figures/ : folder of scripts for generating figures for the article.
 
 # Microarray analyses main packages, available at bioconductor, scripts based on GEO2R:
 
