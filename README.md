@@ -10,21 +10,13 @@ Read counts table is then read in R and read count numbers are normalized via DE
 R packages clusterprofiler and enrichplot are then used for enrichment analysis (Over-representation analysis (ORA) and Gene set enrichment analysis (GSEA) and graph plotting.
 
 
-##############
-# Microarray #
-##############
-
-# Main packages, available at bioconductor, scripts based on GEO2R:
+# Microarray analyses main packages, available at bioconductor, scripts based on GEO2R:
 
 - Biobase;
 - GEOquery;
 - limma;
 
-##############
-# RNA-seq #
-##############
-
-# Main softwares:
+# Main softwares for RNA-seq to read counts:
 
 
 - SRA Tools for obtaining .sra data and converting to fastq:
@@ -47,11 +39,9 @@ R packages clusterprofiler and enrichplot are then used for enrichment analysis 
   - Software and manual available at https://github.com/ShiLab-Bioinformatics/subread;
   - Will output a .txt read count per sample. Combine those into a .csv table containing all samples and gene symbols.
  
-###########
-# Using R #
-###########
 
-# Main packages, available at bioconductor:
+
+# R Main packages, available at bioconductor:
 
 - DESeq2;
 - clusterprofiler;
