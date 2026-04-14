@@ -7,7 +7,7 @@ library(edgeR)
 
 # Set the working directory and read the data
 setwd ("~/Desktop/CS_Paper")
-degs <- read.csv("DEGs_todos_paper.csv")
+degs <- read.csv("DEGs_all_figure.csv")
 
 # Melt the data for plotting
 data1 <- melt(degs, id.vars = "Genes")
